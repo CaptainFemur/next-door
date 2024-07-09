@@ -3,12 +3,13 @@
 import { useRouter } from 'next/navigation';
 import Image from "next/image";
 import Link from "next/link";
+import { generateNumero } from '@/utils/randomNumero';
 
 export default function PepiDoor() {
   const router = useRouter();
 
   function openDoor(){
-    const randomNumber = Math.floor(Math.random() * 151) + 1;
+    const randomNumber = generateNumero();
     router.push(`/door/${randomNumber}`);
   }
 

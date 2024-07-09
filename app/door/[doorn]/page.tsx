@@ -1,4 +1,4 @@
-import { cp } from "fs";
+import { generateNumero } from "@/utils/randomNumero";
 import Image from "next/image";
 import Link from 'next/link'
 
@@ -23,7 +23,7 @@ async function getPokemon(numero: number) {
   }
 
   const otherDatas = await otherResponse.json();
-  const nameInFrench = otherDatas.names.find(item => item.language.name === 'fr')?.name;
+  const nameInFrench = otherDatas.names.find((item: { language: { name: string } }) => item.language.name === 'fr')?.name;
   pokemonDatas.name = nameInFrench || pokemonDatas.name;
 
   return pokemonDatas;
@@ -36,6 +36,7 @@ export default async function DoorNumber({ params }: { params: { doorn: number }
   return (
     <main className="flex min-h-screen flex-col items-center py-12 px-24">
       <Link className="absolute left-20 top-20 text-start self-start bg-secondary text-white py-2 px-4 rounded hover:bg-transparent hover:text-secondary" href="/door">Retour</Link>
+      <Link className="absolute right-20 top-20 text-start self-start bg-sky-700 text-white py-2 px-4 rounded hover:bg-transparent hover:text-sky-700 hover:border-2 hover:border-sky-700" href={"/door/"+ generateNumero()}>Ouvrir une autre porte</Link>
       <div className="py-12 z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
         <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit md:static md:w-auto  md:rounded-xl md:border md:bg-gray-200 md:p-4 md:dark:bg-zinc-800/30">
           Get started by editing&nbsp;
