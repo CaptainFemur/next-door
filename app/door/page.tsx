@@ -8,7 +8,7 @@ export default function PepiDoor() {
   const router = useRouter();
 
   function openDoor(){
-    const randomNumber = Math.floor(Math.random() * 100) + 1;
+    const randomNumber = Math.floor(Math.random() * 151) + 1;
     router.push(`/door/${randomNumber}`);
   }
 

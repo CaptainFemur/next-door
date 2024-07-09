@@ -1,3 +1,4 @@
+import { cp } from "fs";
 import Image from "next/image";
 import Link from 'next/link'
 
@@ -7,7 +8,31 @@ export async function generateMetadata({ params }: { params: { doorn: number } }
   }
 }
 
-export default function DoorNumber({ params }: { params: { doorn: number } }) {
+async function getPokemon(numero: number) {
+  const response = await fetch("https://pokeapi.co/api/v2/pokemon/"+numero);
+
+  if(!response.ok){
+    throw new Error('Failed to fetch pokemon');
+  }
+
+  const pokemonDatas = await response.json();
+  const otherResponse = await fetch(pokemonDatas.species.url);
+
+  if(!otherResponse.ok){
+    throw new Error('Failed to fetch pokemon\'s datas');
+  }
+
+  const otherDatas = await otherResponse.json();
+  const nameInFrench = otherDatas.names.find(item => item.language.name === 'fr')?.name;
+  pokemonDatas.name = nameInFrench || pokemonDatas.name;
+
+  return pokemonDatas;
+}
+
+export default async function DoorNumber({ params }: { params: { doorn: number } }) {
+  const pokemon = await getPokemon(params.doorn);
+  // console.log(pokemon);
+
   return (
     <main className="flex min-h-screen flex-col items-center py-12 px-24">
       <Link className="absolute left-20 top-20 text-start self-start bg-secondary text-white py-2 px-4 rounded hover:bg-transparent hover:text-secondary" href="/door">Retour</Link>
@@ -38,6 +63,8 @@ export default function DoorNumber({ params }: { params: { doorn: number } }) {
 
       <p className="py-12 text-4xl font-bold text-center lg:text-6xl">This is the door n°{params.doorn}</p>
 
+      <p className="text-xl text-center lg:text-2xl">Vous avez trouvé un <span className="text-primary font-bold capitalize">{pokemon.name}</span></p>
+      { pokemon.sprites && <Image src={pokemon.sprites.front_default} alt={pokemon.name} width={120} height={120} />}
     </main>
   );
 }
