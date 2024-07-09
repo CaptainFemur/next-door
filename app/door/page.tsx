@@ -1,17 +1,8 @@
-'use client'
-
-import { useRouter } from 'next/navigation';
+import Reroll from "@/components/reroll";
 import Image from "next/image";
 import Link from "next/link";
-import { generateNumero } from '@/utils/randomNumero';
 
 export default function PepiDoor() {
-  const router = useRouter();
-
-  function openDoor(){
-    const randomNumber = generateNumero();
-    router.push(`/door/${randomNumber}`);
-  }
 
   return (
     <main className="flex min-h-screen flex-col items-center py-12 px-24">
@@ -42,7 +33,7 @@ export default function PepiDoor() {
       </div>
 
       <p className="text-4xl font-bold text-center py-12 lg:text-6xl ">PepiDoor</p>
-      <button onClick={() => openDoor()} className="bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded">Ouvrir une porte</button>
+      <Reroll />
     </main>
   );
 }
