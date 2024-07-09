@@ -8,9 +8,9 @@ export const metadata: Metadata = {
 
 export default function Hodoor() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-around p-24">
-      <Link className="text-start self-start" href="/door">Retour</Link>
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
+    <main className="flex min-h-screen flex-col items-center py-12 px-24">
+      <Link className="absolute left-20 top-20 text-start self-start bg-secondary text-white py-2 px-4 rounded hover:bg-transparent hover:text-secondary" href="/door">Retour</Link>
+      <div className="py-12 z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
         <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit md:static md:w-auto  md:rounded-xl md:border md:bg-gray-200 md:p-4 md:dark:bg-zinc-800/30">
           Get started by editing&nbsp;
           <code className="font-mono font-bold">app/door/page.tsx</code>
@@ -35,7 +35,7 @@ export default function Hodoor() {
         </div>
       </div>
 
-      <p className="text-4xl font-bold text-center lg:text-6xl">Hold the door</p>
+      <p className="py-12 text-4xl font-bold text-center lg:text-6xl">Hold the door</p>
 
     </main>
   );
