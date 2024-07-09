@@ -8,16 +8,16 @@ export async function generateMetadata({ params }: { params: { doorn: number } }
   }
 }
 
+function searchEvolution(chain: any, name: string, preName: string){
+  const tempName = chain?.species.name;
+  if(tempName === name){
+    return searchEvolution(chain.evolves_to[0], name, preName);
+  }
+  return preName === tempName ? false : chain?.species.url;
+}
+
 async function getPokemon(numero: number) {
   const response = await fetch("https://pokeapi.co/api/v2/pokemon/"+numero);
-
-  function searchEvolution(chain: any, name: string, preName: string){
-    const tempName = chain?.species.name;
-    if(tempName === name){
-      return searchEvolution(chain.evolves_to[0], name, preName);
-    }
-    return preName === tempName ? false : chain?.species.url;
-  }
 
   if(!response.ok){
     throw new Error('Failed to fetch pokemon');
@@ -36,6 +36,11 @@ async function getPokemon(numero: number) {
   let preEvolutionName = '';
   if(preEvolution){
     const preResponse = await fetch(preEvolution);
+
+    if(!preResponse.ok){
+      throw new Error('Failed to fetch pre-evo\'s datas');
+    }
+
     const preDatas = await preResponse.json();
     const preEvolutionNumero = preDatas.id;
     preEvolutionName = preDatas.name;
@@ -45,11 +50,21 @@ async function getPokemon(numero: number) {
   const evolution = otherDatas.evolution_chain?.url;
   if(evolution){
     const chainResponse = await fetch(evolution);
+
+    if(!chainResponse.ok){
+      throw new Error('Failed to fetch chain\'s evolution datas');
+    }
+
     const chainDatas = await chainResponse.json();
 
     const hasEvo = searchEvolution(chainDatas.chain.evolves_to[0], pokemonDatas.name, preEvolutionName);
     if(hasEvo){
       const evolutionResponse = await fetch(hasEvo);
+
+      if(!evolutionResponse.ok){
+        throw new Error('Failed to fetch evolution\'s datas');
+      }
+
       const evolutionDatas = await evolutionResponse.json();
       const evolutionNumero = evolutionDatas.id;
       pokemonDatas.evolution = evolutionNumero;
