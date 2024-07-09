@@ -9,7 +9,7 @@ module.exports = {
           hostname: 'raw.githubusercontent.com',
           port: '',
           pathname: '/PokeAPI/sprites/**',
-        },
+        }
       ],
     },
   }

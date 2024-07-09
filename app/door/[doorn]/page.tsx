@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from 'next/link'
 import Pokemon from "./pokemon";
 import Reroll from "@/components/reroll";
+import { Suspense } from "react";
+import loadingImage from '@/public/loading.gif';
 
 export async function generateMetadata({ params }: { params: { doorn: number } }) {
   return {
@@ -41,7 +43,20 @@ export default async function DoorNumber({ params }: { params: { doorn: number }
 
       <p className="py-12 text-4xl font-bold text-center lg:text-6xl">This is the door n°{params.doorn}</p>
 
-      <Pokemon numero={params.doorn} />
+      <Suspense fallback={
+        <div className="flex flex-col justify-between">
+          <Image
+            src={loadingImage}
+            alt="Loading"
+            width={150}
+            height={150}
+          />
+          <p className="italic text-center">Capture en cours...</p>
+        </div>
+      }>
+        <Pokemon numero={params.doorn} />
+      </Suspense>
+
     </main>
   );
 }
