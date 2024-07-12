@@ -1,5 +1,6 @@
 import Image from "next/image";
-import Link from 'next/link'
+import Link from 'next/link';
+import util from 'util';
 
 function searchEvolution(chain: any, name: string, preName: string){
   const tempName = chain?.species.name;
@@ -49,6 +50,8 @@ async function getPokemon(numero: number) {
     }
 
     const chainDatas = await chainResponse.json();
+
+    console.log(util.inspect(chainDatas.chain, {showHidden: false, depth: null, colors: true}));
 
     const hasEvo = searchEvolution(chainDatas.chain.evolves_to[0], pokemonDatas.name, preEvolutionName);
     if(hasEvo){
