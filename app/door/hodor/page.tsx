@@ -35,7 +35,7 @@ export default function Hodoor() {
         </div>
       </div>
 
-      <p className="py-12 text-4xl font-bold text-center lg:text-6xl">Hold the door</p>
+      <h1 className="py-12 text-4xl font-bold text-center lg:text-6xl">Hold the door</h1>
 
     </main>
   );
